@@ -31,6 +31,8 @@
 
 				<form action="${pageContext.request.contextPath}/register-shop"
 					method="POST">
+					<!-- fix -->
+					<input type="hidden" name="csrf_token" value="${sessionScope.csrf_token}">
 					<!-- Truyền accountId dưới dạng input ẩn -->
 					<c:choose>
 						<c:when test="${not empty sessionScope.account}">

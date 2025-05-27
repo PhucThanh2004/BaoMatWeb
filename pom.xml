@@ -1,14 +1,12 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>vn.iotstar</groupId>
-	<artifactId>UTE_Shop</artifactId>
-	<version>1.1.0</version>
-	<packaging>war</packaging>
-
-	<dependencies>
-		<!--
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>vn.iotstar</groupId>
+  <artifactId>UTE_Shop</artifactId>
+  <version>1.1.0</version>
+  <packaging>war</packaging>
+  
+  <dependencies>
+			<!--
 		https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc -->
 		<dependency>
 			<groupId>com.microsoft.sqlserver</groupId>
@@ -61,32 +59,11 @@
 			<artifactId>commons-io</artifactId>
 			<version>2.17.0</version>
 		</dependency>
-
-
-		<!-- Spring Context và Web MVC -->
+		
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-			<version>6.1.6</version> <!-- hoặc phiên bản phù hợp -->
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>6.1.6</version>
-		</dependency>
-
-		<!-- Để sử dụng @Bean, @Configuration -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-beans</artifactId>
-			<version>6.1.6</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.jsoup</groupId>
-			<artifactId>jsoup</artifactId>
-			<version>1.15.4</version>
+    		<groupId>org.mindrot</groupId>
+    		<artifactId>jbcrypt</artifactId>
+    		<version>0.4</version>
 		</dependency>
 
 	</dependencies>
@@ -116,5 +93,5 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-
+	
 </project>

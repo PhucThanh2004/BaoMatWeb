@@ -10,8 +10,7 @@
 			<div class="col-lg-3 col-md-6 col-sm-6">
 				<div class="footer__about">
 					<div class="footer__about__logo">
-						<a href="<c:url value='/index.html'/>"><img
-							src="<c:url value='/assets/user/img/logo.png'/>" alt=""></a>
+						<a href="./index.html"><img src="img/logo.png" alt=""></a>
 					</div>
 					<ul>
 						<li>Địa chỉ: 1 Võ Văn Ngân, Phường Linh Chiểu, Thành phố Thủ
@@ -65,7 +64,7 @@
 <!-- Footer Section End -->
 
 <!-- Js Plugins -->
-<script src="${URL}/js/jquery-3.7.1.min.js"></script>
+<script src="${URL}/js/jquery-3.3.1.min.js"></script>
 <script src="${URL}/js/bootstrap.min.js"></script>
 <script src="${URL}/js/jquery.nice-select.min.js"></script>
 <script src="${URL}/js/jquery-ui.min.js"></script>

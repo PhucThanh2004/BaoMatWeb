@@ -1,6 +1,8 @@
 package vn.iotstar.controllers;
 
 import java.io.IOException;
+import java.security.SecureRandom;
+import java.util.Base64;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -26,8 +28,11 @@ public class LoginController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.getRequestDispatcher("/views/login.jsp").forward(req, resp);
+		// Tạo token CSRF và lưu vào session
+        String csrfToken = generateCsrfToken();
+        req.getSession().setAttribute("csrf_token", csrfToken);
 		
+		req.getRequestDispatcher("/views/login.jsp").forward(req, resp);
 	}
 	
 	@Override
@@ -35,6 +40,14 @@ public class LoginController extends HttpServlet {
 		resp.setContentType("text/html");
 		resp.setCharacterEncoding("UTF-8");
 		req.setCharacterEncoding("UTF-8");
+		
+		// Kiểm tra token CSRF
+        String csrfToken = req.getParameter("csrf_token");
+        String sessionToken = (String) req.getSession().getAttribute("csrf_token");
+        if (csrfToken == null || !csrfToken.equals(sessionToken)) {
+            resp.sendError(HttpServletResponse.SC_FORBIDDEN, "CSRF token không hợp lệ!");
+            return;
+        }
 
 		// lay tham so tu view
 		String email = req.getParameter("email");
@@ -62,6 +75,8 @@ public class LoginController extends HttpServlet {
 			System.out.println("Email: " + acc.getEmail());
 
 			session.setAttribute("account", acc);
+			session.setAttribute("email", acc.getEmail());
+			
 			if (isRememberMe) {
 				saveRemeberMe(resp, email);
 			}
@@ -77,4 +92,12 @@ public class LoginController extends HttpServlet {
 			cookie.setMaxAge(30 * 60);
 			resp.addCookie(cookie);
 		}
+		
+	// Phương thức tạo token CSRF ngẫu nhiên
+    private String generateCsrfToken() {
+        SecureRandom random = new SecureRandom();
+        byte[] bytes = new byte[16];
+        random.nextBytes(bytes);
+        return Base64.getUrlEncoder().withoutPadding().encodeToString(bytes);
+    }
 }

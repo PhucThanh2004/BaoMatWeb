@@ -8,12 +8,12 @@ import java.sql.SQLException;
 
 
 public class DBConnectSQL {
-	private final String serverName = "LAPTOP-D01Q0RDB";
+	private final String serverName = "LAPTOP-DA8RJKG7";
 	private final String dbName = "ute-shop";
 	private final String portNumber = "1433";
 	private final String instance = "";
 	private final String userID = "sa";
-	private final String password = "05052004";
+	private final String password = "113300";
 
 	public Connection getConnection() throws Exception {
 		Connection conn = null;

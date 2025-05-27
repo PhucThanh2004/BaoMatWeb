@@ -58,6 +58,8 @@
                             </c:if>
 
                             <form action="${pageContext.request.contextPath}/register" method="POST" onsubmit="return validateForm()">
+                            	<!-- fix -->
+                            	<input type="hidden" name="csrf_token" value="${sessionScope.csrf_token}">
                                 <div class="mb-3">
                                     <label for="name" class="form-label">Họ và tên</label>
                                     <input type="text" class="form-control" id="name" name="name" placeholder="Nhập họ và tên" required>
@@ -65,7 +67,8 @@
 
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="email" name="email" placeholder="Nhập email" required>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Nhập email" 
+                                    value="<c:out value='${param.phone}' escapeXml='true'/>" required>
                                 </div>
 
                                 <div class="mb-3">

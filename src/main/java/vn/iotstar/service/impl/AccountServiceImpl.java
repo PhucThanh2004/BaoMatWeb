@@ -1,5 +1,7 @@
 package vn.iotstar.service.impl;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import vn.iotstar.dao.IAccountDao;
 import vn.iotstar.dao.impl.AccountDaoImpl;
 import vn.iotstar.models.AccountModel;
@@ -10,7 +12,7 @@ public class AccountServiceImpl implements vn.iotstar.service.IAccountService {
 	@Override
 	public AccountModel login(String email, String password) {
 		AccountModel user = this.findByUserName(email);
-		if(user !=null && password.equals(user.getPassword()))
+		if(user !=null && BCrypt.checkpw(password, user.getPassword()))
 		{
 			return user;
 		}
@@ -80,8 +82,8 @@ public class AccountServiceImpl implements vn.iotstar.service.IAccountService {
 
 	@Override
 	public boolean updatePassword(String email, String code, String newPassword) throws Exception {
-        return accDao.updatePassword(email, code, newPassword);
-
+		String hashedPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt());
+	    return accDao.updatePassword(email, code, hashedPassword);
 	}
 
 }

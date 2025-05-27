@@ -104,7 +104,7 @@
 				<li class="active"><a
 					href="${pageContext.request.contextPath}/home">Home</a></li>
 				<li><a href="${pageContext.request.contextPath}/home">Shop</a></li>
-
+				
 				</li>
 				<c:choose>
 					<c:when test="${not empty sessionScope.account}">
@@ -125,17 +125,17 @@
 			<ul>
 				<c:choose>
 					<c:when test="${not empty sessionScope.account}">
-						<li><i class="fa fa-envelope"></i> <c:out
-								value="${sessionScope.account.email}" /></li>
+						<li><i class="fa fa-envelope"></i>
+							${sessionScope.account.email}</li>
 					</c:when>
 					<c:otherwise>
 						<li><i class="fa fa-envelope"></i> Xin chào!</li>
 					</c:otherwise>
 				</c:choose>
 
+
 				<li>Miễn phí ship cho đơn hàng từ 150k</li>
 			</ul>
-
 		</div>
 	</div>
 
@@ -151,15 +151,13 @@
 							<ul>
 								<c:choose>
 									<c:when test="${not empty sessionScope.account}">
-										<li><i class="fa fa-envelope"></i> <a href="${safeLink}">
-												<c:out value="${sessionScope.account.email}" />
-										</a></li>
+										<li><i class="fa fa-envelope"></i> <a
+											href="${pageContext.request.contextPath}/account?email=${account.email}">${sessionScope.account.email}</a></li>
 									</c:when>
 									<c:otherwise>
 										<li><i class="fa fa-envelope"></i> Xin chào!</li>
 									</c:otherwise>
 								</c:choose>
-
 
 
 								<li>Miễn phí ship cho đơn hàng từ 150k</li>
@@ -227,7 +225,7 @@
 								href="${pageContext.request.contextPath}/home">Home</a></li>
 
 
-
+							
 							</li>
 							<c:choose>
 								<c:when test="${not empty sessionScope.account}">
@@ -240,8 +238,8 @@
 									<c:when
 										test="${not empty sessionScope.account and sessionScope.account.isSeller == true}">
 										<a
-											href="${pageContext.request.contextPath}/shop/product/list-product?id=${sessionScope.account.id}">Trang
-											Shop </a>
+											href="${pageContext.request.contextPath}/shop/product/list-product?id=${sessionScope.account.id}">Trang Shop
+									</a>
 									</c:when>
 								</c:choose></li>
 						</ul>

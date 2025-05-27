@@ -20,6 +20,8 @@ import vn.iotstar.service.impl.ShopServiceImpl;
 import vn.iotstar.utils.Constant;
 
 import java.io.IOException;
+import java.security.SecureRandom;
+import java.util.Base64;
 import java.util.List;
 
 @WebServlet(urlPatterns = {"/product/detail"})
@@ -44,6 +46,10 @@ public class ProductDetailController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try{
             int productId = Integer.parseInt(req.getParameter("id"));
+            
+            // Tạo token CSRF và lưu vào session
+            String csrfToken = generateCsrfToken();
+            req.getSession().setAttribute("csrf_token", csrfToken);
 
             categoryService = new CategoryServiceImpl();
             List<CategoryModel> categories = categoryService.getCategories();
@@ -68,6 +74,12 @@ public class ProductDetailController extends HttpServlet {
         }
     }
     
-   
+    // Phương thức tạo token CSRF ngẫu nhiên
+    private String generateCsrfToken() {
+        SecureRandom random = new SecureRandom();
+        byte[] bytes = new byte[16];
+        random.nextBytes(bytes);
+        return Base64.getUrlEncoder().withoutPadding().encodeToString(bytes);
+    }
 
 }

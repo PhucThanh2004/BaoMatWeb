@@ -11,6 +11,8 @@
 		<form
 			action="${pageContext.request.contextPath}/shop/product/add-product"
 			method="post" enctype="multipart/form-data">
+			<!-- fix -->
+			<input type="hidden" name="csrf_token" value="${sessionScope.csrf_token}">
 			<input type="hidden" name="shop" value="${shop}">
 			<div class="form-group">
 				<label for="name">Tên Sản Phẩm</label> <input type="text" id="name"

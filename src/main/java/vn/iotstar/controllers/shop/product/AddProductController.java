@@ -24,7 +24,9 @@ import vn.iotstar.utils.Utils;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.security.SecureRandom;
 import java.time.LocalDateTime;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.List;
 
@@ -41,6 +43,10 @@ public class AddProductController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
+        	// Tạo token CSRF và lưu vào session
+            String csrfToken = generateCsrfToken();
+            req.getSession().setAttribute("csrf_token", csrfToken);
+            
             categoryService = new CategoryServiceImpl();
             List<CategoryModel> categories = categoryService.getCategories();
 
@@ -68,6 +74,14 @@ public class AddProductController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
     	 int accountId = 0;
     	 try {
+    		// Kiểm tra token CSRF
+             String csrfToken = req.getParameter("csrf_token");
+             String sessionToken = (String) req.getSession().getAttribute("csrf_token");
+             if (csrfToken == null || !csrfToken.equals(sessionToken)) {
+                 resp.sendError(HttpServletResponse.SC_FORBIDDEN, "CSRF token không hợp lệ!");
+                 return;
+             }
+    		 
              String name = req.getParameter("name");
              String description = req.getParameter("description");
              double price = Double.parseDouble(req.getParameter("price"));
@@ -116,11 +130,6 @@ public class AddProductController extends HttpServlet {
                  }
              }
              
-          
-             
-             
-     		
-
              // Hiển thị thông báo thành công
              req.getSession().setAttribute("message", "Thêm mới sản phẩm thành công!");
              resp.sendRedirect(req.getContextPath() + "/shop/product/list-product?id="+ shopId);
@@ -130,6 +139,14 @@ public class AddProductController extends HttpServlet {
              resp.sendRedirect(req.getContextPath() + "/shop/product/list-product?id="+ accountId);
              throw new RuntimeException(e);
          }
+    }
+
+    // Phương thức tạo token CSRF ngẫu nhiên
+    private String generateCsrfToken() {
+        SecureRandom random = new SecureRandom();
+        byte[] bytes = new byte[16];
+        random.nextBytes(bytes);
+        return Base64.getUrlEncoder().withoutPadding().encodeToString(bytes);
     }
 
 }

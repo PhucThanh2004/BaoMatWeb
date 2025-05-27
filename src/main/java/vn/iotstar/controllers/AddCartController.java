@@ -24,6 +24,14 @@ public class AddCartController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
+			// Kiểm tra token CSRF
+            String csrfToken = req.getParameter("csrf_token");
+            String sessionToken = (String) req.getSession().getAttribute("csrf_token");
+            if (csrfToken == null || !csrfToken.equals(sessionToken)) {
+                resp.sendError(HttpServletResponse.SC_FORBIDDEN, "CSRF token không hợp lệ!");
+                return;
+            }
+            
 			HttpSession session = req.getSession();
 			AccountModel account = (AccountModel) session.getAttribute("account");
 			int accountId = account.getId();

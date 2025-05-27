@@ -81,6 +81,8 @@
 					<div class="product__details__price">${product.price}VNĐ</div>
 					<form action="${pageContext.request.contextPath}/cart/add"
 						method="post">
+						<!-- fix -->
+						<input type="hidden" name="csrf_token" value="${sessionScope.csrf_token}">
 						<input type="hidden" name="productId" value="${product.id}">
 						<div class="product__details__quantity">
 							<div class="quantity">

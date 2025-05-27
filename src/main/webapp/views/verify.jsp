@@ -41,6 +41,8 @@
                     </c:if>
 
                     <form action="${pageContext.request.contextPath}/VerifyCode" method="POST" class="form">
+                    	<!-- fix -->
+                    	<input type="hidden" name="csrf_token" value="${sessionScope.csrf_token}">
                         <div class="form-group">
                             <label for="authcode">Mã xác minh</label>
                             <input type="text" class="form-control" id="authcode" name="authcode" placeholder="Nhập mã xác minh" required>

@@ -35,10 +35,13 @@
 						<h4 class="card-title text-center mb-4">Gửi mã xác nhận</h4>
 						<form action="${pageContext.request.contextPath}/forgotPassword"
 							method="POST">
+							<!-- fix -->
+							<input type="hidden" name="csrf_token" value="${sessionScope.csrf_token}">
 							<div class="mb-3">
 								<label for="email" class="form-label">Email</label> <input
 									type="email" class="form-control form-control-sm" id="email"
-									name="email" placeholder="Nhập email của bạn" required>
+									name="email" placeholder="Nhập email của bạn" 
+									value="<c:out value='${param.email}' escapeXml='true'/>" required>
 							</div>
 							<button type="submit" class="site-btn w-100">Gửi mã xác
 								nhận</button>

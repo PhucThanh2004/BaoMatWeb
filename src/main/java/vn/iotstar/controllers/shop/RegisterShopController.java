@@ -11,7 +11,9 @@ import vn.iotstar.service.impl.ShopServiceImpl;
 import vn.iotstar.utils.Constant;
 
 import java.io.IOException;
+import java.security.SecureRandom;
 import java.time.LocalDateTime;
+import java.util.Base64;
 
 @WebServlet(urlPatterns = {"/register-shop"})
 public class RegisterShopController extends HttpServlet {
@@ -24,12 +26,24 @@ public class RegisterShopController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    	// Tạo token CSRF và lưu vào session
+        String csrfToken = generateCsrfToken();
+        req.getSession().setAttribute("csrf_token", csrfToken);
+    	
         req.getRequestDispatcher(Constant.SHOP_REGISTER).forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
+        	// Kiểm tra token CSRF
+            String csrfToken = req.getParameter("csrf_token");
+            String sessionToken = (String) req.getSession().getAttribute("csrf_token");
+            if (csrfToken == null || !csrfToken.equals(sessionToken)) {
+                resp.sendError(HttpServletResponse.SC_FORBIDDEN, "CSRF token không hợp lệ!");
+                return;
+            }
+            
             shopService = new ShopServiceImpl();
 
             int accountId = Integer.parseInt(req.getParameter("accountId"));
@@ -61,5 +75,13 @@ public class RegisterShopController extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    // Phương thức tạo token CSRF ngẫu nhiên
+    private String generateCsrfToken() {
+        SecureRandom random = new SecureRandom();
+        byte[] bytes = new byte[16];
+        random.nextBytes(bytes);
+        return Base64.getUrlEncoder().withoutPadding().encodeToString(bytes);
     }
 }
