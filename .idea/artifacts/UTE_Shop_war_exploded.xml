@@ -1,0 +1,21 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="UTE_Shop:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/UTE_Shop_war_exploded</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="UTE_Shop" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: com.microsoft.sqlserver:mssql-jdbc:9.4.1.jre16" />
+          <element id="library" level="project" name="Maven: jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.2" />
+          <element id="library" level="project" name="Maven: jakarta.el:jakarta.el-api:5.0.0" />
+          <element id="library" level="project" name="Maven: org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1" />
+          <element id="library" level="project" name="Maven: org.sitemesh:sitemesh:3.2.1" />
+          <element id="library" level="project" name="Maven: commons-io:commons-io:2.17.0" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="UTE_Shop/web/Web" />
+    </root>
+  </artifact>
+</component>
