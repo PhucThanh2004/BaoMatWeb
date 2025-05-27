@@ -62,4 +62,10 @@ public class CartServiceImpl implements ICartService {
 		cartDao.deleteCartDetail(cartDetailId);
 		
 	}
+	
+	@Override
+	public boolean isCartDetailValid(int cartId, int cartDetailId) throws Exception {
+	    // Kiểm tra cartDetailId có thuộc về cartId không
+	    return cartDao.isCartDetailBelongsToCart(cartId, cartDetailId);
+	}
 }

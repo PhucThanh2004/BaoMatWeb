@@ -109,6 +109,22 @@ public class RegisterController extends HttpServlet {
             req.getRequestDispatcher("/views/register.jsp").forward(req, resp);
             return;
         }
+        
+        String errorMsg = null;
+
+	    // Kiểm tra dữ liệu đầu vào
+	    if (!isValidEmail(email) || !isValidName(name) || !isValidPhone(phone) ||
+	        !isValidPassword(password)) {
+	        errorMsg = "Dữ liệu không hợp lệ!";
+	    } else if (userService.checkExistEmail(email)) {
+	        errorMsg = "Email đã tồn tại!";
+	    }
+
+	    if (errorMsg != null) {
+	        req.setAttribute("error", errorMsg);
+	        req.getRequestDispatcher("/views/register.jsp").forward(req, resp);
+	        return;
+	    }
 
 	    if (userService.checkExistEmail(email)) {
 	    	// Mã hóa email trước khi hiển thị trong thông báo lỗi
@@ -164,5 +180,28 @@ public class RegisterController extends HttpServlet {
 
         return escaped;
     }
+    
+    // Kiểm tra email
+ 	private boolean isValidEmail(String email) {
+ 	    String emailRegex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
+ 	    return email != null && email.matches(emailRegex);
+ 	}
+
+ 	// Kiểm tra tên
+ 	private boolean isValidName(String name) {
+ 	    return name != null && name.matches("^[a-zA-Z\\s]{1,50}$");
+ 	}
+ 	
+ 	// Kiểm tra số điện thoại
+ 	private boolean isValidPhone(String phone) {
+ 	    return phone != null && phone.matches("^\\d{10,15}$");
+ 	}
+
+ 	// Kiểm tra mật khẩu
+ 	private boolean isValidPassword(String password) {
+ 	    if (password == null || password.length() < 8) return false;
+ 	    // Chỉ cho phép chữ hoa, chữ thường, số và một số ký tự đặc biệt an toàn
+ 	    return password.matches("^[a-zA-Z0-9@#$%^&+=!]*$");
+ 	}
 
 }

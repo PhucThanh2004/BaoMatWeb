@@ -157,4 +157,23 @@ public class CartDaoImpl implements ICartDao {
             throw new RuntimeException(e);
         }
     }
+    
+    @Override
+    public boolean isCartDetailBelongsToCart(int cartId, int cartDetailId) throws Exception {
+        String sql = "SELECT COUNT(*) FROM cart_details WHERE cart_id = ? AND id = ?";
+        try (Connection conn = dbConnectSQL.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, cartId);
+            stmt.setInt(2, cartDetailId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0; // Nếu số lượng > 0 thì cartDetailId thuộc về cartId
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false; // Mặc định trả về false nếu không có kết quả
+    }
 }

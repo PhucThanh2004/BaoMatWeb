@@ -12,4 +12,6 @@ public interface ICartService {
     CartModel findCartByAccountId(int accountId) throws Exception;
     void updateCart(int cartId, Map<Integer, Integer> updatedQuantities) throws Exception;
     void deleteCartDetail(int cartDetailId) throws Exception;
+    
+    boolean isCartDetailValid(int cartId, int cartDetailId) throws Exception;
 }

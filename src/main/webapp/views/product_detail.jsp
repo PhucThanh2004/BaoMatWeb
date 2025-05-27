@@ -151,19 +151,15 @@
 						<!-- Tab 3: Đánh giá sản phẩm -->
 						<div class="tab-pane fade" id="tabs-3" role="tabpanel">
 							<div class="product__details__tab__desc">
-								<c:forEach var="review" items="${reviews}">
-									<div class="review-box"
-										style="border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 5px;">
-										<div class="review-header" style="margin-bottom: 10px;">
-											<h5 class="author-name"
-												style="margin: 0; font-size: 16px; font-weight: bold;">
-												${review.authorName} <span class="review-date"
-													style="font-size: 12px; color: #888;">
+									<c:forEach var="review" items="${reviews}">
+									<div class="review-box">
+										<div class="review-header">
+											<h5 class="author-name">
+												${review.authorName} <span class="review-date">
 													(${review.createdAt}) </span>
 											</h5>
 										</div>
-										<div class="review-content"
-											style="font-size: 14px; color: #333;">
+										<div class="review-content">
 											<p>${review.content}</p>
 										</div>
 									</div>
@@ -171,8 +167,7 @@
 
 								<!-- Hiển thị thông báo nếu chưa có đánh giá -->
 								<c:if test="${empty reviews}">
-									<p style="text-align: center; color: #888; font-size: 14px;">Chưa
-										có đánh giá nào cho sản phẩm này.</p>
+									<p class="no-reviews-message">Chưa có đánh giá nào cho sản phẩm này.</p>
 								</c:if>
 							</div>
 						</div>
